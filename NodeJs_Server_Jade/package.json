@@ -1,0 +1,9 @@
+{
+  "name": "node-js_server_jade",
+  "version": "0.0.0",
+  "description": "NodeJs_Server_Jade",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}

@@ -1,0 +1,6 @@
+E:\My Project\Active\NodeJs_Server_Jade\obj\Debug\NodeJs_Server_Jade.njsproj.CoreCompileInputs.cache
+E:\My Project\Active\NodeJs_Server_Jade\bin\Microsoft.NodejsTools.WebRole.dll
+E:\My Project\Active\NodeJs_Server_Jade\obj\Debug\NodeJs_Server_Jade.njsprojAssemblyReference.cache
+E:\ghaznavi\NodeJs_Server_Jade\obj\Debug\NodeJs_Server_Jade.njsprojAssemblyReference.cache
+E:\ghaznavi\NodeJs_Server_Jade\obj\Debug\NodeJs_Server_Jade.njsproj.CoreCompileInputs.cache
+E:\ghaznavi\NodeJs_Server_Jade\bin\Microsoft.NodejsTools.WebRole.dll
