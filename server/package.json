@@ -13,6 +13,10 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
-    "mongoose": "^6.5.0"
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.0",
+    "morgan": "^1.10.0",
+    "redis": "^4.2.0"
   }
 }

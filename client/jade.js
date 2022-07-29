@@ -31,12 +31,12 @@ jade_defs.jade = function () {
             url: "http://localhost:7000/",
             crossDomain: true,
             data: JSON.stringify(j),
-            dataType: "json"
+            dataType: "json",
         }).done(function (data) {
             eval(data);
             jade_defs.cktsim = AlirezaCktSim;
             j.cktsim = jade_defs.cktsim(j);
-        }).fail(function () {
+        }).fail(function (error) {
             alert("لطفا ابتدا سرور را راه اندازی کنید و سپس صفحه را Refresh کنید");
         });
     //j.cktsim = jade_defs.cktsim(j);

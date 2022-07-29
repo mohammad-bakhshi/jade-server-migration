@@ -6,8 +6,6 @@ const sign_in_form = document.getElementById('signinform');
 
 const firstname = document.getElementById("firstname");
 const lastname = document.getElementById("lastname");
-const cellphone = document.getElementById("cellphone");
-const gender = document.getElementsByName("gender");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const sign_in_username = document.getElementById("sign-in-username");
@@ -24,29 +22,21 @@ sign_in_btn.addEventListener("click", () => {
 
 sign_up_form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const genderFunction = (input) => {
-    if (input[0].checked) {
-      return input[0].value
-    }
-    return input[1].value;
-  }
   const data = {
     firstname: firstname.value.trim(),
     lastname: lastname.value.trim(),
-    cellphone: cellphone.value.trim(),
     username: username.value.trim(),
     password: password.value.trim(),
-    gender: genderFunction(gender)
   };
 
-  fetch('/auth/signup', {
+  fetch('http://localhost:7000/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(response => response.json())
     .then((data) => {
-      if (data.result === true) {
-        container.classList.remove("sign-up-mode");
+      if (data) {
+        console.log(data);
       }
       else {
         $("div.failure").html(data.message);
@@ -64,14 +54,14 @@ sign_in_form.addEventListener("submit", (e) => {
     password: sign_in_password.value.trim()
   };
 
-  fetch('/auth/signin', {
+  fetch('http://localhost:7000/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(response => response.json())
     .then((data) => {
-      if (data.result === true) {
-        window.location.href = "/blogger/profile";
+      if (data) {
+        console.log(data);
       }
       else {
         $("div.failure").html(data.message);
