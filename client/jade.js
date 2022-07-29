@@ -10,9 +10,9 @@ var jade_load_edx; // function for loading student edX submissions into editor
 // "new jade_defs.jade()" will build a self-contained jade object so we can
 // have multiple instances on the same webpage that don't share any
 // state stored in shared variables.
-jade_defs.jade = function() {
+jade_defs.jade = function () {
     var j = this;
-    
+
     $.extend(j, jade_defs.top_level(j));
 
     j.model = jade_defs.model(j);
@@ -46,14 +46,14 @@ jade_defs.jade = function() {
     jade_defs.gates(j);
 };
 
-jade_defs.top_level = function(jade) {
+jade_defs.top_level = function (jade) {
 
     var version = "Jade 2.3.15 (2018 \u00A9 MIT EECS)";
 
     var about_msg = version +
-            "<p>Chris Terman wrote the schematic entry, testing and gate-level simulation tools." +
-            "<p>Jacob White wrote the simulation engine for the device-level simulation tools."+
-            "<p>We are grateful to Quanta Computer Incorporated for their support of the development of the Jade schematic entry and simulation tool as part of a research project on educational technologies with the MIT Computer Science and Artificial Intelligence Laboratory.";
+        "<p>Chris Terman wrote the schematic entry, testing and gate-level simulation tools." +
+        "<p>Jacob White wrote the simulation engine for the device-level simulation tools." +
+        "<p>We are grateful to Quanta Computer Incorporated for their support of the development of the Jade schematic entry and simulation tool as part of a research project on educational technologies with the MIT Computer Science and Artificial Intelligence Laboratory.";
 
     //////////////////////////////////////////////////////////////////////
     //
@@ -74,17 +74,17 @@ jade_defs.top_level = function(jade) {
 
         // insert framework into DOM
         this.top_level = $('<div class="jade-top-level">' +
-                           ' <div id="module-tools" class="jade-toolbar"></div>' +
-                           ' <div class="jade-tabs-div"></div>' +
-                           ' <div class="jade-resize-icon"></div>' +
-                           ' <div class="jade-version"><a href="#">'+version+'</a></div>' +
-                           ' <div class="jade-status"><span id="message"></span></div>' +
-                           '</div>');
-        $('.jade-resize-icon',this.top_level).append(jade.icons.resize_icon);
+            ' <div id="module-tools" class="jade-toolbar"></div>' +
+            ' <div class="jade-tabs-div"></div>' +
+            ' <div class="jade-resize-icon"></div>' +
+            ' <div class="jade-version"><a href="#">' + version + '</a></div>' +
+            ' <div class="jade-status"><span id="message"></span></div>' +
+            '</div>');
+        $('.jade-resize-icon', this.top_level).append(jade.icons.resize_icon);
         $(owner).append(this.top_level);
 
-        $('.jade-version a',this.top_level).on('click',function (event) {
-            jade_window('About Jade',$('<div class="jade-about"></div>').html(about_msg),$(owner).offset());
+        $('.jade-version a', this.top_level).on('click', function (event) {
+            jade_window('About Jade', $('<div class="jade-about"></div>').html(about_msg), $(owner).offset());
             event.preventDefault();
             return false;
         });
@@ -94,18 +94,18 @@ jade_defs.top_level = function(jade) {
         // set up module tools at the very top
         this.module_tools = this.top_level.find('#module-tools');
         this.module_tools.append('<span>Module:</span><select id="module-select"></select>');
-        this.module_tools.append(this.module_tool(jade.icons.edit_module_icon,'edit-module','Edit/create module',edit_module,'hierarchy-tool'));
-        this.module_tools.append(this.module_tool(jade.icons.copy_module_icon,'copy-module','Copy current module',copy_module,'hierarchy-tool'));
-        this.module_tools.append(this.module_tool(jade.icons.delete_module_icon,'delete-module','Delete current module',delete_module,'hierarchy-tool'));
-        this.module_tools.append(this.module_tool(jade.icons.download_icon,'download-modules','Save modules to module clipboard',download_modules));
-        this.module_tools.append(this.module_tool(jade.icons.upload_icon,'upload-modules','Select modules to load from module clipboard',upload_modules));
+        this.module_tools.append(this.module_tool(jade.icons.edit_module_icon, 'edit-module', 'Edit/create module', edit_module, 'hierarchy-tool'));
+        this.module_tools.append(this.module_tool(jade.icons.copy_module_icon, 'copy-module', 'Copy current module', copy_module, 'hierarchy-tool'));
+        this.module_tools.append(this.module_tool(jade.icons.delete_module_icon, 'delete-module', 'Delete current module', delete_module, 'hierarchy-tool'));
+        this.module_tools.append(this.module_tool(jade.icons.download_icon, 'download-modules', 'Save modules to module clipboard', download_modules));
+        this.module_tools.append(this.module_tool(jade.icons.upload_icon, 'upload-modules', 'Select modules to load from module clipboard', upload_modules));
         // too dangerous!
         // this.module_tools.append(this.module_tool(jade.icons.recycle_icon,'start-over','Discard all work on this problem and start over',start_over));
         if (jade.cloud_upload) {
-            this.module_tools.append(this.module_tool(jade.icons.cloud_upload_icon,'cloud-upload','Upload designs to the cloud',jade.cloud_upload));
+            this.module_tools.append(this.module_tool(jade.icons.cloud_upload_icon, 'cloud-upload', 'Upload designs to the cloud', jade.cloud_upload));
         }
         if (jade.cloud_download) {
-            this.module_tools.append(this.module_tool(jade.icons.cloud_download_icon,'cloud-download','Dowload designs from the cloud',jade.cloud_download));
+            this.module_tools.append(this.module_tool(jade.icons.cloud_download_icon, 'cloud-download', 'Dowload designs from the cloud', jade.cloud_download));
         }
 
         /*
@@ -116,15 +116,15 @@ jade_defs.top_level = function(jade) {
         });
         this.module_tools.append(mailto);
          */
-        
 
-        $('#module-select',this.module_tools).on('change',function () {
+
+        $('#module-select', this.module_tools).on('change', function () {
             owner.jade.edit($(this).val());
         });
 
         // now add a display tab for each registered editor
         this.tabs_div = this.top_level.find('.jade-tabs-div');
-        this.tabs = {}; 
+        this.tabs = {};
         this.selected_tab = undefined;
 
         // add status line at the bottom
@@ -133,9 +133,9 @@ jade_defs.top_level = function(jade) {
         // set up handler to resize jade
         var me = this;
         if ($(owner).hasClass('jade-resize')) {
-            $('.jade-resize-icon',this.top_level)
-                .css('display','inline')
-                .on('mousedown',function (event) {
+            $('.jade-resize-icon', this.top_level)
+                .css('display', 'inline')
+                .on('mousedown', function (event) {
                     var doc = $(document).get(0);
                     var div = $(owner);
                     var rx = event.pageX;
@@ -147,52 +147,52 @@ jade_defs.top_level = function(jade) {
                         div.width(w);
                         div.height(h);
                         // requery size in case it's been constrained by css
-                        me.resize(div.width(),div.height());
+                        me.resize(div.width(), div.height());
                         rx = event.pageX;
                         ry = event.pageY;
                         return false;
                     };
 
                     function up(event) {
-                        doc.removeEventListener('mousemove',move,true);
-                        doc.removeEventListener('mouseup',move,true);
+                        doc.removeEventListener('mousemove', move, true);
+                        doc.removeEventListener('mouseup', move, true);
                         return false;
                     }
 
                     // add handlers to document so we capture them no matter what
-                    doc.addEventListener('mousemove',move,true);
-                    doc.addEventListener('mouseup',up,true);
+                    doc.addEventListener('mousemove', move, true);
+                    doc.addEventListener('mouseup', up, true);
                     return false;
                 });
         } else {
             // we're full screen, so resize when window resizes
-            $(window).on('resize',function() {
+            $(window).on('resize', function () {
                 var body = $('body');
-                body.css('overflow','hidden');   // avoid scrollbars
+                body.css('overflow', 'hidden');   // avoid scrollbars
                 var win_w = $(window).width() - (body.outerWidth(true) - body.width());
                 var win_h = $(window).height() - (body.outerHeight(true) - body.height());
-                me.resize(win_w,win_h);
+                me.resize(win_w, win_h);
             });
             $(window).trigger('resize');  // initial sizing
         }
     }
 
-    Jade.prototype.module_tool = function (icon,id,tip,action,extra_classes) {
-        var tool = $('<span></span>').append(icon).addClass('jade-module-tool jade-tool-enabled').attr('id',id);
+    Jade.prototype.module_tool = function (icon, id, tip, action, extra_classes) {
+        var tool = $('<span></span>').append(icon).addClass('jade-module-tool jade-tool-enabled').attr('id', id);
         if (extra_classes) tool.addClass(extra_classes);
 
         var j = this;  // for closure
-        tool.on('click',function (event) {
-            if (action) action(j,event);
+        tool.on('click', function (event) {
+            if (action) action(j, event);
             event.preventDefault();
             return false;
         });
 
-        tool.on('mouseenter',function () {
+        tool.on('mouseenter', function () {
             j.status.html(tip);
         });
 
-        tool.on('mouseleave',function () {
+        tool.on('mouseleave', function () {
             j.status.html('');
         });
 
@@ -200,10 +200,10 @@ jade_defs.top_level = function(jade) {
     };
 
     // helper function for dumping json for modules -- make accessible at top level
-    jade_dump_json = function (mname,dirty_only) {
+    jade_dump_json = function (mname, dirty_only) {
         var p = new RegExp(mname);
         var result = {};
-        $.each(jade.model.get_modules(),function (mname,module) {
+        $.each(jade.model.get_modules(), function (mname, module) {
             if (p.test(mname)) {
                 result[mname] = module.json(dirty_only);
             }
@@ -216,7 +216,7 @@ jade_defs.top_level = function(jade) {
         jade.model.load_json(JSON.parse(json));
     };
 
-    jade_load_edx = function(s) {
+    jade_load_edx = function (s) {
         var edx_state = JSON.parse(s).state;
         var design = JSON.parse(edx_state).state;
         jade.model.load_json(design);
@@ -228,24 +228,24 @@ jade_defs.top_level = function(jade) {
     // initialize editor from configuration object
     Jade.prototype.initialize = function (config) {
         var me = this;
-        $.extend(this.configuration,config);
+        $.extend(this.configuration, config);
 
-        $('#start-over',this.module_tools).toggle(this.configuration.state && this.configuration.initial_state);
-        $('#cloud-upload',this.module_tools).toggle(this.configuration.cloud_url !== undefined);
-        $('#cloud-download',this.module_tools).toggle(this.configuration.cloud_url !== undefined);
+        $('#start-over', this.module_tools).toggle(this.configuration.state && this.configuration.initial_state);
+        $('#cloud-upload', this.module_tools).toggle(this.configuration.cloud_url !== undefined);
+        $('#cloud-download', this.module_tools).toggle(this.configuration.cloud_url !== undefined);
 
         // initialize object for recording test results
         if (this.configuration.tests === undefined) this.configuration.tests = {};
 
-        $('.hierarchy-tool',this.top_level).toggle(this.configuration.hierarchical == 'true');
+        $('.hierarchy-tool', this.top_level).toggle(this.configuration.hierarchical == 'true');
 
         // setup editor panes
         var elist;
         if (this.configuration.editors) {
             elist = [];
-            $.each(this.configuration.editors,function(index,value) {
+            $.each(this.configuration.editors, function (index, value) {
                 // look through list of defined editors to see if we have a match
-                $.each(editors,function(eindex,evalue) {
+                $.each(editors, function (eindex, evalue) {
                     if (evalue.prototype.editor_name == value) elist.push(evalue);
                 });
             });
@@ -253,17 +253,17 @@ jade_defs.top_level = function(jade) {
 
         // clear out existing tabs
         me.tabs_div.empty();
-        $('.jade-tab-body',me.top_level).remove();
+        $('.jade-tab-body', me.top_level).remove();
 
         // add tabs for specified editors
-        $.each(elist,function(i,editor) {
+        $.each(elist, function (i, editor) {
             var ename = editor.prototype.editor_name;
             clipboards[ename] = []; // initialize editor's clipboard
 
             // add tab selector
-            var tab = $('<div class="jade-tab">'+ename+'</div>');
+            var tab = $('<div class="jade-tab">' + ename + '</div>');
             me.tabs_div.append(tab);
-            tab.click(function(event) {
+            tab.click(function (event) {
                 jade.model.save_modules();
                 me.show(ename);
                 event.preventDefault();
@@ -280,7 +280,7 @@ jade_defs.top_level = function(jade) {
             me.tabs[ename] = [tab[0], body[0]];
 
             // save changes to server if we're leaving this particular editor
-            body.on('mouseleave',function () { jade.model.save_modules(); });
+            body.on('mouseleave', function () { jade.model.save_modules(); });
         });
         // select first aspect as the one to be displayed
         if (elist.length > 0) {
@@ -288,27 +288,27 @@ jade_defs.top_level = function(jade) {
         }
 
         if ($(this.parent).hasClass('jade-resize'))
-            this.resize($(this.parent).width(),$(this.parent).height());
+            this.resize($(this.parent).width(), $(this.parent).height());
         else $(window).trigger('resize');  // let editors know their size
 
         // load state (dictionary of module_name:json).  Start with initial_state
         // then overwrite with user's state
         if (this.configuration.initial_state) {
-            jade.model.load_json(this.configuration.initial_state,true);
+            jade.model.load_json(this.configuration.initial_state, true);
         }
         if (this.configuration.state) {
-            jade.model.load_json(this.configuration.state,false);
+            jade.model.load_json(this.configuration.state, false);
         }
 
         // starting module?
         var edit = this.configuration.edit || '/user/untitled';
-        if (edit[0] != '/') edit = '/user/'+edit;
+        if (edit[0] != '/') edit = '/user/' + edit;
         var mname = edit.split('.');          // module.aspect
         this.edit(mname[0]);  // select module
         if (mname.length > 1) this.show(mname[1]);
     };
 
-    Jade.prototype.get_state = function() {
+    Jade.prototype.get_state = function () {
         // save updated test results and any aspects that
         // differ from initial state
         var state = {
@@ -328,41 +328,42 @@ jade_defs.top_level = function(jade) {
         return state;
     };
 
-    Jade.prototype.get_grade = function() {
-        return {'required-tests': this.configuration['required-tests'] || [],
-                'tests': this.configuration.tests || {}
-               };
+    Jade.prototype.get_grade = function () {
+        return {
+            'required-tests': this.configuration['required-tests'] || [],
+            'tests': this.configuration.tests || {}
+        };
     };
 
     // remember module and aspect for next visit
-    Jade.prototype.bookmark = function() {
+    Jade.prototype.bookmark = function () {
         if (this.module !== undefined) {
             var mark = this.module.get_name();
             if (this.selected_tab !== undefined) mark += '.' + this.selected_tab;
         }
     };
 
-    Jade.prototype.edit = function(module) {
+    Jade.prototype.edit = function (module) {
         if (typeof module == 'string') module = jade.model.find_module(module);
         this.module = module;
 
         // update list of available modules
         var pattern_list = (this.configuration.parts || ['.*']).map(function (p) { return new RegExp(p); });
         var mlist = [];
-        jade.model.map_modules(pattern_list,function (m) {
+        jade.model.map_modules(pattern_list, function (m) {
             if (m.confidential()) return;  // can't view confidential models
             var name = m.get_name();
             // only include each module once!
             if (mlist.indexOf(name) == -1) mlist.push(name);
         });
-        build_select(mlist.sort(),module.get_name(),$('#module-select',this.module_tools));
+        build_select(mlist.sort(), module.get_name(), $('#module-select', this.module_tools));
 
         if (module.shared) {
-            $('#delete-module',this.module_tools).removeClass('jade-tool-enabled');
-            $('#delete-module',this.module_tools).addClass('jade-tool-disabled');
+            $('#delete-module', this.module_tools).removeClass('jade-tool-enabled');
+            $('#delete-module', this.module_tools).addClass('jade-tool-disabled');
         } else {
-            $('#delete-module',this.module_tools).removeClass('jade-tool-disabled');
-            $('#delete-module',this.module_tools).addClass('jade-tool-enabled');
+            $('#delete-module', this.module_tools).removeClass('jade-tool-disabled');
+            $('#delete-module', this.module_tools).addClass('jade-tool-enabled');
         }
 
         this.bookmark();    // remember current module for next visit
@@ -373,7 +374,7 @@ jade_defs.top_level = function(jade) {
     };
 
     // if underlying library/module is reloaded, refresh each tab
-    Jade.prototype.refresh = function() {
+    Jade.prototype.refresh = function () {
         if (this.module === undefined) return;
 
         // tell each tab which module we're editing
@@ -383,7 +384,7 @@ jade_defs.top_level = function(jade) {
     };
 
     // make a particular tab visible -- DOM class name does the heavy lifting
-    Jade.prototype.show = function(tab_name) {
+    Jade.prototype.show = function (tab_name) {
         this.selected_tab = tab_name;
         this.bookmark();
         for (var tab in this.tabs) {
@@ -396,16 +397,16 @@ jade_defs.top_level = function(jade) {
         }
     };
 
-    Jade.prototype.resize = function(w, h) {
+    Jade.prototype.resize = function (w, h) {
         var e = $(this.top_level);
 
         // adjust target w,h to reflect postion and sizes of padding, borders, margins
         var w_extra = e.outerWidth(true) - e.width();
         var h_extra = e.outerHeight(true) - e.height();
         w -= w_extra;
-        h -= h_extra + $('#module-tools').outerHeight(true) + 
-            $('.jade-tabs-div',e).outerHeight(true) +
-            $('.jade-status',e).outerHeight(true);
+        h -= h_extra + $('#module-tools').outerHeight(true) +
+            $('.jade-tabs-div', e).outerHeight(true) +
+            $('.jade-status', e).outerHeight(true);
 
         // adjust size of all the tab bodies
         for (var tab in this.tabs) {
@@ -432,32 +433,32 @@ jade_defs.top_level = function(jade) {
     //////////////////////////////////////////////////////////////////////
 
     function edit_module(j) {
-        var offset = $('.jade-tabs-div',j.top_level).offset();
+        var offset = $('.jade-tabs-div', j.top_level).offset();
 
         var content = $('<div style="margin:10px;"><div id="msg" style="display:none;color:red;margin-bottom:10px;"></div></div>');
         content.append('Module name:');
-        var input = build_input('text',10,'');
-        $(input).css('vertical-align','middle');
+        var input = build_input('text', 10, '');
+        $(input).css('vertical-align', 'middle');
         content.append(input);
 
         function edit() {
             var name = $(input).val();
             // force module names to be a pathname, in /user by default
-            if (name[0] != '/') name = '/user/'+name;
+            if (name[0] != '/') name = '/user/' + name;
 
             function try_again(msg) {
-                $('#msg',content).text(msg);
-                $('#msg',content).show();
-                dialog('Edit Module',content,edit,offset);
+                $('#msg', content).text(msg);
+                $('#msg', content).show();
+                dialog('Edit Module', content, edit, offset);
             }
 
             // make sure name is legit
             var valid = true;
-            $.each(name.split('/'),function (index,n) {
+            $.each(name.split('/'), function (index, n) {
                 if (!jade.utils.validate_name(n)) valid = false;
             });
             if (!valid) {
-                try_again('Invalid module name: '+name);
+                try_again('Invalid module name: ' + name);
                 return;
             }
 
@@ -466,14 +467,14 @@ jade_defs.top_level = function(jade) {
             j.edit(module.get_name());
         }
 
-        dialog('Edit Module',content,edit,offset);
+        dialog('Edit Module', content, edit, offset);
     }
 
     function delete_module(j) {
-        var offset = $('.jade-tabs-div',j.top_level).offset();
+        var offset = $('.jade-tabs-div', j.top_level).offset();
 
         var content = $('<div style="margin:10px;width:300px;">Click OK to confirm the deletion of module <span id="mname"></span>.  Note that this action cannot be undone.</div>');
-        $('#mname',content).text(j.module.get_name());
+        $('#mname', content).text(j.module.get_name());
 
         function del() {
             var module = j.module;
@@ -484,46 +485,46 @@ jade_defs.top_level = function(jade) {
             j.edit(jade.model.find_module('/user/untitled'));
         }
 
-        dialog('Delete Module',content,del,offset);
+        dialog('Delete Module', content, del, offset);
     }
 
     function copy_module(j) {
-        var offset = $('.jade-tabs-div',j.top_level).offset();
-        
+        var offset = $('.jade-tabs-div', j.top_level).offset();
+
         var content = $('<div style="margin:10px;"><div id="msg" style="display:none;color:red;margin-bottom:10px;"></div></div>');
         content.append('New module name:');
-        var input = build_input('text',10,'');
-        $(input).css('vertical-align','middle');
+        var input = build_input('text', 10, '');
+        $(input).css('vertical-align', 'middle');
         content.append(input);
 
         function copy() {
             var name = $(input).val();
             // force module names to be a pathname, in /user by default
-            if (name[0] != '/') name = '/user/'+name;
+            if (name[0] != '/') name = '/user/' + name;
 
             function try_again(msg) {
-                $('#msg',content).text(msg);
-                $('#msg',content).show();
-                dialog('Copy Module',content,copy,offset);
+                $('#msg', content).text(msg);
+                $('#msg', content).show();
+                dialog('Copy Module', content, copy, offset);
             }
 
             // make sure name is legit
             var valid = true;
-            $.each(name.split('/'),function (index,n) {
+            $.each(name.split('/'), function (index, n) {
                 if (!jade.utils.validate_name(n)) valid = false;
             });
             if (!valid) {
-                try_again('Invalid module name: '+name);
+                try_again('Invalid module name: ' + name);
                 return;
             }
 
             if (name in jade.model.get_modules()) {
-                try_again('Module already exists: '+name);
+                try_again('Module already exists: ' + name);
                 return;
             }
 
             // make a new module and initialize it using the original
-            var module = jade.model.find_module(name,j.module.json());
+            var module = jade.model.find_module(name, j.module.json());
             // in case we're copying a shared module
             module.shared = false;
             module.remove_property('readonly');
@@ -534,23 +535,23 @@ jade_defs.top_level = function(jade) {
             j.edit(module);
         }
 
-        dialog('Copy Module',content,copy,offset);
+        dialog('Copy Module', content, copy, offset);
     }
 
     // add our non-shared modules to localStorage
     function download_modules(j) {
         var saved_modules = JSON.parse(localStorage.getItem('jade_saved_modules') || "{}");
-        $.extend(saved_modules,jade.model.json_modules().json);
-        localStorage.setItem('jade_saved_modules',JSON.stringify(saved_modules));
+        $.extend(saved_modules, jade.model.json_modules().json);
+        localStorage.setItem('jade_saved_modules', JSON.stringify(saved_modules));
     };
 
-    function upload_modules(j,event) {
+    function upload_modules(j, event) {
         if (event && event.shiftKey) {
             var content = $('<div style="margin:10px;"><textarea rows="5" cols="80"/></div>');
-            var offset = $('.jade-tabs-div',j.top_level).offset();
+            var offset = $('.jade-tabs-div', j.top_level).offset();
 
             function load_answer() {
-                var s = eval($('textarea',content).val());
+                var s = eval($('textarea', content).val());
                 var edx_state = JSON.parse(s).state;
                 var design = JSON.parse(edx_state).state;
                 jade.model.load_json(design);
@@ -559,7 +560,7 @@ jade_defs.top_level = function(jade) {
                 console.log(modules);
             }
 
-            dialog('Load student answer',content,load_answer,offset);
+            dialog('Load student answer', content, load_answer, offset);
             return;
         }
 
@@ -569,41 +570,41 @@ jade_defs.top_level = function(jade) {
 
         // build checkbox selector for each available module
         var select = [];
-        $.each(mnames,function (index,mname) {
-            var cbox = $('<input type="checkbox" value=""></input>').attr('name',mname);
-            select.push($('<div class="jade-module-select"></div>').append(cbox,mname));
+        $.each(mnames, function (index, mname) {
+            var cbox = $('<input type="checkbox" value=""></input>').attr('name', mname);
+            select.push($('<div class="jade-module-select"></div>').append(cbox, mname));
         });
 
         // build a dialog using up to 3 columns to list modules
         var row = $('<tr valign="top"></tr>');
-        var ncols = Math.max(3,Math.ceil(select.length/10));
+        var ncols = Math.max(3, Math.ceil(select.length / 10));
         var select_all = $('<td><a href="">Select all</a></td>');
-        select_all.attr('colspan',ncols.toString());
-        var nitems = Math.ceil(select.length/ncols);
-        var col,index=0,i;
+        select_all.attr('colspan', ncols.toString());
+        var nitems = Math.ceil(select.length / ncols);
+        var col, index = 0, i;
         while (ncols--) {
             col = $('<td></td>');
             for (i = 0; i < nitems; i += 1)
                 col.append(select[index++]);
             row.append(col);
         }
-        var contents = $('<table></table>').append(row,$('<tr align="center"></tr>').append(select_all));
+        var contents = $('<table></table>').append(row, $('<tr align="center"></tr>').append(select_all));
 
         // implement select all functionality
-        $('a',select_all).on('click',function (event) {
-            $('input',row).prop('checked',true);
+        $('a', select_all).on('click', function (event) {
+            $('input', row).prop('checked', true);
             event.preventDefault();
             return false;
         });
 
         // find checked items and load them
-        function upload () {
-            $.each(select,function (index,item) {
-                var input = $('input',item);
+        function upload() {
+            $.each(select, function (index, item) {
+                var input = $('input', item);
                 var mname = input.attr('name');
                 if (input[0].checked) {
                     //console.log(mname + ' is checked');
-                    jade.model.find_module(mname,modules[mname]);
+                    jade.model.find_module(mname, modules[mname]);
                 }
             });
 
@@ -612,8 +613,8 @@ jade_defs.top_level = function(jade) {
         }
 
         // let user choose
-        var offset = $('.jade-tabs-div',j.top_level).offset();
-        dialog('Select modules to load',contents,upload,offset);
+        var offset = $('.jade-tabs-div', j.top_level).offset();
+        dialog('Select modules to load', contents, upload, offset);
     };
 
     function start_over(j) {
@@ -624,10 +625,10 @@ jade_defs.top_level = function(jade) {
             jade.model.save_modules(true);
         }
 
-        var offset = $('.jade-tabs-div',j.top_level).offset();
+        var offset = $('.jade-tabs-div', j.top_level).offset();
         dialog('Start over?',
-               $('<span>Click OK to discard all work on this problem and start over again.</span>'),
-               restart,offset);
+            $('<span>Click OK to discard all work on this problem and start over again.</span>'),
+            restart, offset);
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -642,7 +643,7 @@ jade_defs.top_level = function(jade) {
 
         // setup canas
         this.canvas = $('<div><svg></svg></div>').addClass(class_name)[0]
-        ;
+            ;
         this.canvas.diagram = this;
         this.svg = this.canvas.children.item(0);
 
@@ -659,7 +660,7 @@ jade_defs.top_level = function(jade) {
         this.annotation_font = '6pt sans-serif'; // point size for diagram annotations
 
         // grid in the background
-        this.svg_grid = jade.utils.make_svg('g',{
+        this.svg_grid = jade.utils.make_svg('g', {
             id: 'grid',
             stroke: this.grid_style,
             'stroke-width': 0.2,
@@ -668,7 +669,7 @@ jade_defs.top_level = function(jade) {
         this.svg.appendChild(this.svg_grid);
 
         // then static content
-        this.svg_content = jade.utils.make_svg('g',{
+        this.svg_content = jade.utils.make_svg('g', {
             id: 'content',
             stroke: this.normal_style,
             'stroke-width': 1,
@@ -678,7 +679,7 @@ jade_defs.top_level = function(jade) {
         this.svg.appendChild(this.svg_content);
 
         // then selected content
-        this.svg_selected = jade.utils.make_svg('g',{
+        this.svg_selected = jade.utils.make_svg('g', {
             id: 'selected',
             stroke: this.selected_style,
             'stroke-width': 1,
@@ -686,12 +687,12 @@ jade_defs.top_level = function(jade) {
             fill: 'none'
         });
         this.svg.appendChild(this.svg_selected);
-        
+
         // scrolling controls on top
-        this.svg.appendChild(this.svg_controls(24,24));
+        this.svg.appendChild(this.svg_controls(24, 24));
 
         // module name
-        this.svg_module_name = jade.utils.svg_text('',4,4,'left','bottom',{
+        this.svg_module_name = jade.utils.svg_text('', 4, 4, 'left', 'bottom', {
             style: 'font: 12pt sans-serif',
             fill: this.normal_style,
             stroke: 'none'
@@ -716,39 +717,39 @@ jade_defs.top_level = function(jade) {
     }
 
     // fetch attributes from the tag that created us
-    Diagram.prototype.getAttribute = function(attr) {
+    Diagram.prototype.getAttribute = function (attr) {
         return undefined;
     };
 
-    Diagram.prototype.set_aspect = function(aspect) {
+    Diagram.prototype.set_aspect = function (aspect) {
         this.aspect = aspect;
         this.show_grid = true;
         this.redraw_background(); // compute bounding box
         this.zoomall(); // let's see the whole diagram
     };
 
-    Diagram.prototype.unselect_all = function(which) {
+    Diagram.prototype.unselect_all = function (which) {
         this.annotations = []; // remove all annotations
 
-        this.aspect.map_over_components(function(c, i) {
+        this.aspect.map_over_components(function (c, i) {
             if (i != which) c.set_select(false);
         });
     };
 
-    Diagram.prototype.remove_annotations = function() {
+    Diagram.prototype.remove_annotations = function () {
         this.unselect_all();
         this.redraw_background();
     };
 
-    Diagram.prototype.add_annotation = function(callback) {
+    Diagram.prototype.add_annotation = function (callback) {
         this.annotations.push(callback);
         this.redraw();
     };
 
-    Diagram.prototype.drag_begin = function() {
+    Diagram.prototype.drag_begin = function () {
         // let components know they're about to move
         var cursor_grid = 1;
-        this.aspect.map_over_components(function(c) {
+        this.aspect.map_over_components(function (c) {
             if (c.selected) {
                 c.move_begin();
                 cursor_grid = Math.max(cursor_grid, c.required_grid);
@@ -762,9 +763,9 @@ jade_defs.top_level = function(jade) {
         this.dragging = true;
     };
 
-    Diagram.prototype.drag_end = function() {
+    Diagram.prototype.drag_end = function () {
         // let components know they're done moving
-        this.aspect.map_over_components(function(c) {
+        this.aspect.map_over_components(function (c) {
             if (c.selected) c.move_end();
         });
         this.dragging = false;
@@ -773,7 +774,7 @@ jade_defs.top_level = function(jade) {
         this.redraw_background();
     };
 
-    Diagram.prototype.zoomin = function() {
+    Diagram.prototype.zoomin = function () {
         var nscale = this.scale * this.zoom_factor;
 
         if (nscale < this.zoom_max) {
@@ -785,7 +786,7 @@ jade_defs.top_level = function(jade) {
         }
     };
 
-    Diagram.prototype.zoomout = function() {
+    Diagram.prototype.zoomout = function () {
         var nscale = this.scale / this.zoom_factor;
 
         if (nscale > this.zoom_min) {
@@ -797,7 +798,7 @@ jade_defs.top_level = function(jade) {
         }
     };
 
-    Diagram.prototype.zoomall = function() {
+    Diagram.prototype.zoomall = function () {
         // w,h for diagram including a margin on all sides
         var diagram_w = 1.5 * (this.bbox[2] - this.bbox[0]);
         var diagram_h = 1.5 * (this.bbox[3] - this.bbox[1]);
@@ -808,7 +809,7 @@ jade_defs.top_level = function(jade) {
             var scale_x = $(this.canvas).width() / diagram_w;
             var scale_y = $(this.canvas).height() / diagram_h;
             this.scale = Math.pow(this.zoom_factor,
-                                  Math.ceil(Math.log(Math.min(scale_x, scale_y)) / Math.log(this.zoom_factor)));
+                Math.ceil(Math.log(Math.min(scale_x, scale_y)) / Math.log(this.zoom_factor)));
             if (this.scale < this.zoom_min) this.scale = this.zoom_min;
             else if (this.scale > this.zoom_max) this.scale = this.zoom_max;
         }
@@ -822,7 +823,7 @@ jade_defs.top_level = function(jade) {
 
     function diagram_toggle_grid(diagram) {
         diagram.show_grid = !diagram.show_grid;
-        $(diagram.canvas).css('background-color',diagram.show_grid ? diagram.background_style : 'white');
+        $(diagram.canvas).css('background-color', diagram.show_grid ? diagram.background_style : 'white');
         diagram.redraw_background();
     }
 
@@ -844,7 +845,7 @@ jade_defs.top_level = function(jade) {
 
         // look for selected components, move them to clipboard.
         diagram.aspect.start_action();
-        diagram.aspect.map_over_components(function(c) {
+        diagram.aspect.map_over_components(function (c) {
             if (c.selected) {
                 c.remove();
                 clipboards[diagram.editor.editor_name].push(c);
@@ -862,14 +863,14 @@ jade_defs.top_level = function(jade) {
         clipboards[diagram.editor.editor_name] = [];
 
         // look for selected components, copy them to clipboard.
-        diagram.aspect.map_over_components(function(c) {
+        diagram.aspect.map_over_components(function (c) {
             if (c.selected) clipboards[diagram.editor.editor_name].push(c.clone(c.coords[0], c.coords[1]));
         });
 
         diagram.redraw(); // digram didn't change, but toolbar status may have
     }
 
-    function diagram_paste(diagram,keystroke) {
+    function diagram_paste(diagram, keystroke) {
         var clipboard = clipboards[diagram.editor.editor_name];
         var i, c;
 
@@ -913,21 +914,21 @@ jade_defs.top_level = function(jade) {
         diagram.redraw();
     }
 
-    Diagram.prototype.set_cursor_grid = function(g) {
+    Diagram.prototype.set_cursor_grid = function (g) {
         this.cursor_grid = g;
         this.cursor_x = this.on_grid(this.aspect_x);
         this.cursor_y = this.on_grid(this.aspect_y);
     };
 
     // determine nearest grid point
-    Diagram.prototype.on_grid = function(v, grid) {
+    Diagram.prototype.on_grid = function (v, grid) {
         if (grid === undefined) grid = this.cursor_grid;
         if (v < 0) return Math.floor((-v + (grid >> 1)) / grid) * -grid;
         else return Math.floor((v + (grid >> 1)) / grid) * grid;
     };
 
-   // rotate selection about center of its bounding box
-    Diagram.prototype.rotate = function(rotation) {
+    // rotate selection about center of its bounding box
+    Diagram.prototype.rotate = function (rotation) {
         var bbox = this.aspect.selected_bbox();
         var grid = this.aspect.selected_grid();
 
@@ -938,7 +939,7 @@ jade_defs.top_level = function(jade) {
         this.aspect.start_action();
 
         // rotate each selected component relative center of bbox
-        this.aspect.map_over_components(function(c) {
+        this.aspect.map_over_components(function (c) {
             if (c.selected) {
                 c.move_begin();
                 c.rotate(rotation, cx, cy);
@@ -950,7 +951,7 @@ jade_defs.top_level = function(jade) {
         bbox = this.aspect.selected_bbox();
         var dx = cx - this.on_grid((bbox[0] + bbox[2]) >> 1, grid);
         var dy = cy - this.on_grid((bbox[1] + bbox[3]) >> 1, grid);
-        this.aspect.map_over_components(function(c) {
+        this.aspect.map_over_components(function (c) {
             if (c.selected) {
                 if (dx !== 0 || dy !== 0) c.move(dx, dy);
                 c.move_end();
@@ -981,14 +982,14 @@ jade_defs.top_level = function(jade) {
         diagram.rotate(3);
     }
 
-    Diagram.prototype.resize = function(tw,th) {
+    Diagram.prototype.resize = function (tw, th) {
         if (tw === undefined) {
             var c = $(this.canvas);
             tw = c.width();
             th = c.height();
         }
 
-        this.svg.setAttribute('viewbox','0 0 '+ tw + ' ' + th);
+        this.svg.setAttribute('viewbox', '0 0 ' + tw + ' ' + th);
         $(this.svg).width(tw);
         $(this.svg).height(th);
 
@@ -1003,18 +1004,18 @@ jade_defs.top_level = function(jade) {
 
     // here to redraw background image containing static portions of the diagram
     // Also redraws dynamic portion.
-    Diagram.prototype.redraw_background = function() {
+    Diagram.prototype.redraw_background = function () {
         // unselected components
         this.unsel_bbox = this.aspect.unselected_bbox();
 
         // set up offset and scale
         var transform = 'translate(' +
-                (-this.origin_x*this.scale).toString() + ' ' +
-                (-this.origin_y*this.scale).toString() + ')' +
-                ' scale(' + this.scale.toString() + ')';
-        this.svg_grid.setAttribute('transform',transform);
-        this.svg_content.setAttribute('transform',transform);
-        this.svg_selected.setAttribute('transform',transform);
+            (-this.origin_x * this.scale).toString() + ' ' +
+            (-this.origin_y * this.scale).toString() + ')' +
+            ' scale(' + this.scale.toString() + ')';
+        this.svg_grid.setAttribute('transform', transform);
+        this.svg_content.setAttribute('transform', transform);
+        this.svg_selected.setAttribute('transform', transform);
 
         // grid
         $(this.svg_grid).empty();   // start with a clean slate
@@ -1026,22 +1027,22 @@ jade_defs.top_level = function(jade) {
             var i;
 
             for (i = this.grid * Math.ceil(first_x / this.grid); i < last_x; i += this.grid) {
-                this.svg_grid.appendChild(jade.utils.make_svg('line',{x1:i, y1:first_y, x2:i, y2:last_y}));
+                this.svg_grid.appendChild(jade.utils.make_svg('line', { x1: i, y1: first_y, x2: i, y2: last_y }));
             }
 
             for (i = this.grid * Math.ceil(first_y / this.grid); i < last_y; i += this.grid) {
-                this.svg_grid.appendChild(jade.utils.make_svg('line',{x1:first_x, y1:i, x2:last_x, y2:i}));
+                this.svg_grid.appendChild(jade.utils.make_svg('line', { x1: first_x, y1: i, x2: last_x, y2: i }));
             }
 
             // indicate origin
-            this.svg_grid.appendChild(jade.utils.make_svg('circle',{cx:0, cy:0, r: this.grid/2}));
+            this.svg_grid.appendChild(jade.utils.make_svg('circle', { cx: 0, cy: 0, r: this.grid / 2 }));
         }
 
 
         // draw unselected components
         $(this.svg_content).empty();   // start with a clean slate
         var diagram = this; // for closure below
-        this.aspect.map_over_components(function(c) {
+        this.aspect.map_over_components(function (c) {
             if (c.selected) return;
             var s = c.svg(diagram);
             if (s) diagram.svg_content.appendChild(s);
@@ -1051,13 +1052,13 @@ jade_defs.top_level = function(jade) {
         var name = '';
         if (this.aspect && this.aspect.module) name = this.aspect.module.get_name();
         this.svg_module_name.textContent = name;
-        this.svg_module_name.setAttribute('y',$(this.canvas).height() - 4);
+        this.svg_module_name.setAttribute('y', $(this.canvas).height() - 4);
 
         this.redraw(); // background changed, redraw on screen
     };
 
     // redraw what user sees = static image + dynamic parts
-    Diagram.prototype.redraw = function() {
+    Diagram.prototype.redraw = function () {
         // selected components
         this.bbox = this.aspect.selected_bbox(this.unsel_bbox);
         if (this.bbox[0] == Infinity) this.bbox = [0, 0, 0, 0];
@@ -1065,7 +1066,7 @@ jade_defs.top_level = function(jade) {
         // draw selected components
         $(this.svg_selected).empty();   // start with a clean slate
         var diagram = this; // for closure below
-        this.aspect.map_over_components(function(c) {
+        this.aspect.map_over_components(function (c) {
             if (!c.selected) return;
             var s = c.svg(diagram);
             if (s) diagram.svg_selected.appendChild(s);
@@ -1086,12 +1087,12 @@ jade_defs.top_level = function(jade) {
         // draw selection rectangle
         if (this.select_rect) {
             var t = this.select_rect;
-            var path = "M "+ t[0].toString() + " " + t[1].toString();
-            path += " L "+ t[2].toString() + " " + t[1].toString();
-            path += " L "+ t[2].toString() + " " + t[3].toString();
-            path += " L "+ t[0].toString() + " " + t[3].toString();
+            var path = "M " + t[0].toString() + " " + t[1].toString();
+            path += " L " + t[2].toString() + " " + t[1].toString();
+            path += " L " + t[2].toString() + " " + t[3].toString();
+            path += " L " + t[0].toString() + " " + t[3].toString();
             path += " Z";
-            this.svg_selected.appendChild(jade.utils.make_svg('path',{d: path}));
+            this.svg_selected.appendChild(jade.utils.make_svg('path', { d: path }));
         }
 
         // add any annotations
@@ -1101,10 +1102,10 @@ jade_defs.top_level = function(jade) {
         }
     };
 
-    Diagram.prototype.svg_controls = function(x,y) {
-        var svg = jade.utils.make_svg('g',{
+    Diagram.prototype.svg_controls = function (x, y) {
+        var svg = jade.utils.make_svg('g', {
             id: 'controls',
-            transform: 'translate(' + x.toString() + ' ' + y.toString() +')',
+            transform: 'translate(' + x.toString() + ' ' + y.toString() + ')',
             stroke: this.control_style,
             'stroke-width': 0.5,
             fill: 'none'
@@ -1116,20 +1117,22 @@ jade_defs.top_level = function(jade) {
         this.zctl_top = y + 24;
 
         // scrolling
-        svg.appendChild(jade.utils.make_svg('circle',{x: 0, y: 0, r: this.sctl_r,
-                                                      fill: this.background_style}));
-        
+        svg.appendChild(jade.utils.make_svg('circle', {
+            x: 0, y: 0, r: this.sctl_r,
+            fill: this.background_style
+        }));
+
         // direction markers
-        svg.appendChild(jade.utils.make_svg('path',{d: "M 4 -8 l -4 -4 l -4 4", 'stroke-width': 3}));  // north
-        svg.appendChild(jade.utils.make_svg('path',{d: "M 8 4 l 4 -4 l -4 -4", 'stroke-width': 3}));  // east
-        svg.appendChild(jade.utils.make_svg('path',{d: "M 4 8 l -4 4 l -4 -4", 'stroke-width': 3}));  // south
-        svg.appendChild(jade.utils.make_svg('path',{d: "M -8 4 l -4 -4 l 4 -4", 'stroke-width': 3}));  // west
+        svg.appendChild(jade.utils.make_svg('path', { d: "M 4 -8 l -4 -4 l -4 4", 'stroke-width': 3 }));  // north
+        svg.appendChild(jade.utils.make_svg('path', { d: "M 8 4 l 4 -4 l -4 -4", 'stroke-width': 3 }));  // east
+        svg.appendChild(jade.utils.make_svg('path', { d: "M 4 8 l -4 4 l -4 -4", 'stroke-width': 3 }));  // south
+        svg.appendChild(jade.utils.make_svg('path', { d: "M -8 4 l -4 -4 l 4 -4", 'stroke-width': 3 }));  // west
 
         // zoom controls
-        svg.appendChild(jade.utils.make_svg('path',{d: "M -8 24 l 16 0 l 0 48 l -16 0 Z", fill: this.background_style}));
-        svg.appendChild(jade.utils.make_svg('path',{d: "M -4 32 l 8 0 m -4 -4 l 0 8", 'stroke-width': 1}));  // zoom in
-        svg.appendChild(jade.utils.make_svg('path',{d: "M -4 48 l 8 0", 'stroke-width': 1}));  // zoom out
-        svg.appendChild(jade.utils.make_svg('path',{d: "M -4 60 l 3 0 m 2 0 l 3 0 l 0 3 m 0 2 l 0 3 l -3 0 m -2 0 l -3 0 l 0 -3 m 0 -2 l 0 -3", 'stroke-width': 1}));  // surround
+        svg.appendChild(jade.utils.make_svg('path', { d: "M -8 24 l 16 0 l 0 48 l -16 0 Z", fill: this.background_style }));
+        svg.appendChild(jade.utils.make_svg('path', { d: "M -4 32 l 8 0 m -4 -4 l 0 8", 'stroke-width': 1 }));  // zoom in
+        svg.appendChild(jade.utils.make_svg('path', { d: "M -4 48 l 8 0", 'stroke-width': 1 }));  // zoom out
+        svg.appendChild(jade.utils.make_svg('path', { d: "M -4 60 l 3 0 m 2 0 l 3 0 l 0 3 m 0 2 l 0 3 l -3 0 m -2 0 l -3 0 l 0 -3 m 0 -2 l 0 -3", 'stroke-width': 1 }));  // surround
 
         return svg;
     };
@@ -1144,7 +1147,7 @@ jade_defs.top_level = function(jade) {
     //   mouse_x,mouse_y = coords relative to upper left of canvas
     //   aspect_x,aspect_y = coords in aspect's coordinate system
     //   cursor_x,cursor_y = aspect coords rounded to nearest grid point
-    Diagram.prototype.event_coords = function(event) {
+    Diagram.prototype.event_coords = function (event) {
         var pos = $(this.canvas).offset();
         this.mouse_x = event.pageX - pos.left;
         this.mouse_y = event.pageY - pos.top;
@@ -1155,16 +1158,16 @@ jade_defs.top_level = function(jade) {
     };
 
     // process keystrokes, consuming those that are meaningful to us
-    Diagram.prototype.key_down = function(event) {
+    Diagram.prototype.key_down = function (event) {
         var code = event.keyCode;
 
         // ignore modifier keys (shift, ctrl, alt, caps lock, window/cmd keys)
-        if (code==16 || code==17 || code==18 || code==20 || code==91 || code==92)
+        if (code == 16 || code == 17 || code == 18 || code == 20 || code == 91 || code == 92)
             return true;
 
         // cmd/ctrl a: select all
         if ((event.ctrlKey || event.metaKey) && code == 65) {
-            this.aspect.map_over_components(function(c) {
+            this.aspect.map_over_components(function (c) {
                 c.set_select(true);
             });
             this.redraw_background();
@@ -1182,7 +1185,7 @@ jade_defs.top_level = function(jade) {
         else if (code == 8 || code == 46) {
             // delete selected components
             this.aspect.start_action();
-            this.aspect.map_over_components(function(c) {
+            this.aspect.map_over_components(function (c) {
                 if (c.selected) c.remove();
             });
             this.aspect.end_action();
@@ -1197,7 +1200,7 @@ jade_defs.top_level = function(jade) {
 
         // cmd/ctrl v: paste
         else if ((event.ctrlKey || event.metaKey) && code == 86) {
-            diagram_paste(this,true);
+            diagram_paste(this, true);
         }
 
         // cmd/ctrl x: cut
@@ -1222,15 +1225,15 @@ jade_defs.top_level = function(jade) {
     };
 
     // handle events in pan/zoom control
-    Diagram.prototype.pan_zoom = function() {
+    Diagram.prototype.pan_zoom = function () {
         var mx = this.mouse_x;
         var my = this.mouse_y;
         var sx = mx - this.sctl_x;
         var sy = my - this.sctl_y;
         var zx = mx - this.zctl_left;
         var zy = my - this.zctl_top;
-        var delta,temp;
-        
+        var delta, temp;
+
         if (sx * sx + sy * sy <= this.sctl_r * this.sctl_r) { // click in scrolling control
             // click on scrolling control, check which quadrant
             if (Math.abs(sy) > Math.abs(sx)) { // N or S
@@ -1260,11 +1263,11 @@ jade_defs.top_level = function(jade) {
     };
 
     // handle the (possible) start of a selection
-    Diagram.prototype.start_select = function(shiftKey) {
+    Diagram.prototype.start_select = function (shiftKey) {
         // give all components a shot at processing the selection event
         var which = -1;
         var diagram = this; // for closure
-        this.aspect.map_over_components(function(c, i) {
+        this.aspect.map_over_components(function (c, i) {
             if (c.select(diagram.aspect_x, diagram.aspect_y, shiftKey)) {
                 if (c.selected) {
                     if (!diagram.aspect.read_only()) {
@@ -1289,7 +1292,7 @@ jade_defs.top_level = function(jade) {
 
             // if there's nothing to drag, set up a selection rectangle
             if (!this.dragging) this.select_rect = [this.aspect_x, this.aspect_y,
-                                                    this.aspect_x, this.aspect_y];
+            this.aspect_x, this.aspect_y];
         } else if (!this.dragging) {
             // shift-click on background starts a pan
             this.panning = true;
@@ -1303,7 +1306,7 @@ jade_defs.top_level = function(jade) {
     };
 
     // handle dragging and selection rectangle
-    Diagram.prototype.mouse_move = function() {
+    Diagram.prototype.mouse_move = function () {
         if (this.dragging) {
             // see how far we moved
             var dx = this.cursor_x - this.drag_x;
@@ -1314,7 +1317,7 @@ jade_defs.top_level = function(jade) {
                 this.drag_y = this.cursor_y;
 
                 // give all components a shot at processing the event
-                this.aspect.map_over_components(function(c) {
+                this.aspect.map_over_components(function (c) {
                     if (c.selected) c.move(dx, dy);
                 });
             }
@@ -1351,7 +1354,7 @@ jade_defs.top_level = function(jade) {
     };
 
     // handle dragging and selection rectangle
-    Diagram.prototype.mouse_up = function(shiftKey) {
+    Diagram.prototype.mouse_up = function (shiftKey) {
         // dragging
         if (this.dragging) this.drag_end();
 
@@ -1364,13 +1367,13 @@ jade_defs.top_level = function(jade) {
             if (r[0] != r[2] || r[1] != r[3]) {
                 // convert to diagram coordinates
                 //var s = [r[0] / this.scale + this.origin_x, r[1] / this.scale + this.origin_y, r[2] / this.scale + this.origin_x, r[3] / this.scale + this.origin_y];
-                var s = [r[0],r[1],r[2],r[3]];
+                var s = [r[0], r[1], r[2], r[3]];
                 jade.model.canonicalize(s);
 
                 if (!shiftKey) this.unselect_all();
 
                 // select components that intersect selection rectangle
-                this.aspect.map_over_components(function(c) {
+                this.aspect.map_over_components(function (c) {
                     c.select_rect(s, shiftKey);
                 });
             }
@@ -1385,13 +1388,13 @@ jade_defs.top_level = function(jade) {
         }
     };
 
-    Diagram.prototype.message = function(message) {
+    Diagram.prototype.message = function (message) {
         var status = this.editor.status;
 
         if (status) status.html(message);
     };
 
-    Diagram.prototype.clear_message = function(message) {
+    Diagram.prototype.clear_message = function (message) {
         var status = this.editor.status;
 
         if (status && status.text() == message) status.text('');
@@ -1409,11 +1412,11 @@ jade_defs.top_level = function(jade) {
 
         // call to update progress bar
         progress[0].update_progress = function (percent) {
-            progress.find('.jade-progress-bar').css('width',percent+'%');
+            progress.find('.jade-progress-bar').css('width', percent + '%');
         };
 
         var stop = progress.find('#stop');
-        stop.on('click',function(event) {
+        stop.on('click', function (event) {
             progress[0].stop_requested = true;
             event.preventDefault();
             return false;
@@ -1421,7 +1424,7 @@ jade_defs.top_level = function(jade) {
         return progress;
     }
 
-    Diagram.prototype.dialog = function(title, content, callback) {
+    Diagram.prototype.dialog = function (title, content, callback) {
         // position top,left of window where mouse is.  mouse_x and mouse_y
         // are relative to the canvas, so use its offset to figure things out
         var coffset = $(this.canvas).offset();
@@ -1431,14 +1434,14 @@ jade_defs.top_level = function(jade) {
         dialog(title, content, callback, coffset);
     };
 
-    Diagram.prototype.window = function(title, content, offset) {
+    Diagram.prototype.window = function (title, content, offset) {
         // position top,left of window where mouse is.  mouse_x and mouse_y
         // are relative to the canvas, so use its offset to figure things out
         var coffset = $(this.canvas).offset();
         coffset.top += this.mouse_y + (offset || 0);
         coffset.left += this.mouse_x + (offset || 0);
 
-        jade_window(title,content,coffset);
+        jade_window(title, content, coffset);
     };
 
     // set up a dialog with specified title, content and two buttons at
@@ -1449,11 +1452,11 @@ jade_defs.top_level = function(jade) {
     function dialog(title, content, callback, offset) {
         // create the div for the top level of the dialog, add to DOM
         var dialog = $('<div>' +
-                       ' <div class="jade-dialog-content"></div>' +
-                       ' <div class="jade-dialog-buttons">' +
-                       '  <span id="ok" class="jade-dialog-button">OK</span>' +
-                       '  <span id="cancel" class="jade-dialog-button">Cancel</span></div>' +
-                       '</div>');
+            ' <div class="jade-dialog-content"></div>' +
+            ' <div class="jade-dialog-buttons">' +
+            '  <span id="ok" class="jade-dialog-button">OK</span>' +
+            '  <span id="cancel" class="jade-dialog-button">Cancel</span></div>' +
+            '</div>');
 
         dialog[0].callback = callback;
 
@@ -1461,7 +1464,7 @@ jade_defs.top_level = function(jade) {
         // them a keypress listener that interprets ENTER as
         // clicking OK.
         var focus;  // remember field to get initial focus
-        $(content).find('.property').each(function (i,field) {
+        $(content).find('.property').each(function (i, field) {
             var f = $(field);
             if (i == 0) focus = f;
             field.dialog = dialog[0]; // help event handler find us...
@@ -1482,12 +1485,12 @@ jade_defs.top_level = function(jade) {
         // fill in body element, set up click handlers
         dialog.find('.jade-dialog-content').append(content);
 
-        dialog.find('#ok').on('click',function (event) {
+        dialog.find('#ok').on('click', function (event) {
             window_close(dialog[0].win);
 
             // invoke the callback with the dialog contents as the argument.
             // small delay allows browser to actually remove window beforehand
-            if (dialog[0].callback) setTimeout(function() {
+            if (dialog[0].callback) setTimeout(function () {
                 dialog[0].callback();
             }, 1);
 
@@ -1495,7 +1498,7 @@ jade_defs.top_level = function(jade) {
             return false;
         });
 
-        dialog.find('#cancel').on('click',function (event) {
+        dialog.find('#cancel').on('click', function (event) {
             window_close(dialog[0].win);
             event.preventDefault();
             return false;
@@ -1515,7 +1518,7 @@ jade_defs.top_level = function(jade) {
 
         // build a row for each element in associative array
         for (var i in a) {
-            var row = $('<tr valign="center"><td><nobr>'+i+':</nobr></td><td id="field"></td></tr>');
+            var row = $('<tr valign="center"><td><nobr>' + i + ':</nobr></td><td id="field"></td></tr>');
             row.find('#field').append(a[i]);
             tbl.append(row);
         }
@@ -1524,7 +1527,7 @@ jade_defs.top_level = function(jade) {
     }
 
     function build_button(label, callback) {
-        var button = $('<button>'+label+'</button>').click(callback);
+        var button = $('<button>' + label + '</button>').click(callback);
         return button[0];
     }
 
@@ -1535,7 +1538,7 @@ jade_defs.top_level = function(jade) {
             input = $('<textarea class="property" autocorrect="off" autocapitalize="off" rows="1"></textarea>');
             if (type == 'string') input.addClass('newline-allowed');
         } else {
-            input = $('<input class="property" autocorrect="off" autocapitalize="off"></input>').attr('type',type).attr('size',size);
+            input = $('<input class="property" autocorrect="off" autocapitalize="off"></input>').attr('type', type).attr('size', size);
         }
         input.val(value === undefined ? '' : value.toString());
         return input[0];
@@ -1547,9 +1550,9 @@ jade_defs.top_level = function(jade) {
         else select = $(select);
         select.empty();
         for (var i = 0; i < options.length; i += 1) {
-            var option = $('<option>'+options[i]+'</option>');
+            var option = $('<option>' + options[i] + '</option>');
             select.append(option);
-            if (options[i] == selected) option.attr('selected','true');
+            if (options[i] == selected) option.attr('selected', 'true');
         }
         return select[0];
     }
@@ -1558,9 +1561,9 @@ jade_defs.top_level = function(jade) {
 
     function jade_window(title, content, offset) {
         // create the div for the top level of the window
-        var win = $('<div class="jade-window">'+
-                    ' <div class="jade-window-title">' + title + '<span style="float:right;cursor: pointer">'+jade.icons.close_icon + '</span></div>' + //'<img style="float: right"></img></div>' +
-                    '</div>');
+        var win = $('<div class="jade-window">' +
+            ' <div class="jade-window-title">' + title + '<span style="float:right;cursor: pointer">' + jade.icons.close_icon + '</span></div>' + //'<img style="float: right"></img></div>' +
+            '</div>');
         win[0].content = content;
         win[0].drag_x = undefined;
         win[0].draw_y = undefined;
@@ -1581,9 +1584,9 @@ jade_defs.top_level = function(jade) {
 
         if (content.resize) {
             var resize = $('<div class="jade-window-resize"></div>');
-            resize.append($(jade.icons.resize_icon).css('pointer-events','none'));
+            resize.append($(jade.icons.resize_icon).css('pointer-events', 'none'));
             resize[0].win = win[0];
-            win[0].resize = function(dx, dy) {
+            win[0].resize = function (dx, dy) {
                 // change size of window and content
                 var e = win;
                 e.height(e.height() + dy);
@@ -1618,7 +1621,7 @@ jade_defs.top_level = function(jade) {
 
         // adjust all zIndex values
         for (i = 0; i < window_list.length; i += 1) {
-            $(window_list[i]).css('z-index',100 + i);
+            $(window_list[i]).css('z-index', 100 + i);
         }
     }
 
@@ -1666,14 +1669,14 @@ jade_defs.top_level = function(jade) {
         }
 
         function up(event) {
-            doc.removeEventListener('mousemove',move,true);
-            doc.removeEventListener('mouseup',up,true);
+            doc.removeEventListener('mousemove', move, true);
+            doc.removeEventListener('mouseup', up, true);
             return false; // consume event
         }
 
         // add handlers to document so we capture them no matter what
-        doc.addEventListener('mousemove',move,true);
-        doc.addEventListener('mouseup',up,true);
+        doc.addEventListener('mousemove', move, true);
+        doc.addEventListener('mouseup', up, true);
 
         return false;
     }
@@ -1693,13 +1696,13 @@ jade_defs.top_level = function(jade) {
         };
 
         function up(event) {
-            doc.removeEventListener('mousemove',move,true);
-            doc.removeEventListener('mouseup',up,true);
+            doc.removeEventListener('mousemove', move, true);
+            doc.removeEventListener('mouseup', up, true);
             return false; // consume event
         };
 
-        doc.addEventListener('mousemove',move,true);
-        doc.addEventListener('mouseup',up,true);
+        doc.addEventListener('mousemove', move, true);
+        doc.addEventListener('mouseup', up, true);
 
         return false;
     }
@@ -1716,11 +1719,11 @@ jade_defs.top_level = function(jade) {
         this.toolbar = $('<div class="jade-toolbar noselect"></div>');
     }
 
-    Toolbar.prototype.add_tool = function(tname, icon, tip, handler, enable_check) {
+    Toolbar.prototype.add_tool = function (tname, icon, tip, handler, enable_check) {
         var tool;
         if (icon.search('data:image') != -1) {
             tool = $('<img draggable="false"></img>');
-            tool.attr('src',icon);
+            tool.attr('src', icon);
         }
         else {
             tool = $('<button></button>').append(icon);
@@ -1742,11 +1745,11 @@ jade_defs.top_level = function(jade) {
         return tool;
     };
 
-    Toolbar.prototype.add_spacer = function() {
+    Toolbar.prototype.add_spacer = function () {
         this.toolbar.append('<div class="jade-tool-spacer"></div>');
     };
 
-    Toolbar.prototype.enable_tools = function(diagram) {
+    Toolbar.prototype.enable_tools = function (diagram) {
         // loop through the tools, updating their enabled status
         for (var t in this.tools) {
             var tool = this.tools[t];
